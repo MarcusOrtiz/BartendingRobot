@@ -1,8 +1,0 @@
-prefix=/home/mjo24/BartendingRobot/catkin_ws/install
-
-Name: bartending_robot
-Description: Description of bartending_robot
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
