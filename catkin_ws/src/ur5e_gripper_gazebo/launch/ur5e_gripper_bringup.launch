@@ -50,6 +50,8 @@
   <arg name="paused" default="false" doc="Starts Gazebo in paused mode" />
   <arg name="gui" default="true" doc="Starts Gazebo gui" />
 
+    <!-- TODO: First task, fix file line -->
+    <!-- params other than file are from ur_description, so they work as expected arleady-->
   <!-- Load urdf on the parameter server -->
   <include file="$(arg robot_description_file)">
     <arg name="joint_limit_params" value="$(arg joint_limit_params)"/>
