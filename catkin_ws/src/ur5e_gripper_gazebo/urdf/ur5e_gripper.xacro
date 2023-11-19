@@ -19,7 +19,7 @@
   <xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface"/>
   <xacro:arg name="safety_limits" default="false"/>
   <xacro:arg name="safety_pos_margin" default="0.15"/>
-  <xacro:arg name="safety_k_position" default="20"/>
+  <xacro:arg name="safet_k_position" default="20"/>
 
 
   <!-- This will call ur.xacro and the gripper -->
@@ -28,7 +28,7 @@
 
 
   <!-- end-effector -->
-  <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/gripper.xacro" />
+  <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/gripper.xacro"/>
 
   <!-- ur5e loading -->
   <!-- The ur5 xacro must be included with passing parameters -->
