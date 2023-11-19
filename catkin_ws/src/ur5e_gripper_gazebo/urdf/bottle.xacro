@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="https://ros.org/wiki/xacro">
+  <!-- Here we define the 2 parameters of the macro -->
+  <xacro:macro name="bottle" params="prefix">
+      <!-- Define a bottle as a link -->
+      <link name="bottle">
+        <visual>
+          <geometry>
+            <mesh filename="package://ur5e_gripper_gazebo/meshes/visual/bottle.stl"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="package://ur5e_gripper_gazebo/meshes/collision/bottle.stl"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Position the bottle in the world -->
+      <joint name="bottle_joint" type="fixed">
+        <parent link="world"/>
+        <child link="bottle"/>
+        <origin xyz="1 1 0.1" rpy="0 0 0"/> <!-- Adjust position and orientation as needed -->
+      </joint>
+
+  </xacro:macro>
+</robot>
