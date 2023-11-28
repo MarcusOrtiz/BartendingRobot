@@ -54,17 +54,24 @@
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
     </joint>
 
+
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/bottle.xacro"/>
+    <xacro:bottle color="Orange"/>
     <xacro:bottle color="Blue"/>
     <xacro:bottle color="Green"/>
 
+    <joint name="Red_bottle_joint" type="fixed">
+        <origin xyz="0.35 0.45 0.044" rpy="0 0 0"/>
+        <parent link="world"/>
+        <child link="Orange_bottle"/>
+    </joint>
     <joint name="Blue_bottle_joint" type="fixed">
-        <origin xyz=".35 0.45 0.044" rpy="0 0 0"/>
+        <origin xyz="0 0.45 0.044" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="Blue_bottle"/>
     </joint>
     <joint name="Green_bottle_joint" type="fixed">
-        <origin xyz="-.35 0.45 0.044" rpy="0 0 0"/>
+        <origin xyz="-0.35 0.45 0.044" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="Green_bottle"/>
     </joint>
