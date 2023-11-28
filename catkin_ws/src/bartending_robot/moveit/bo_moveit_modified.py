@@ -12,7 +12,7 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
-from gripperClass import *
+# from gripperClass import *
 
 import math
 from time import sleep
@@ -348,7 +348,7 @@ class MoveGroupUR5PythonInterface(object):
             joint_goal[5] = 0 # will be ultimate orientation 
         
 
-        gripper.OpenGripper()
+        # gripper.OpenGripper()
 
         move_group.go(joint_goal, wait=True)
 
@@ -537,7 +537,7 @@ class MoveGroupUR5PythonInterface(object):
         self.move_to_target(x_bottle, y_bottle, shoulder)
 
         # # grab the bottle
-        gripper.CloseGripper()
+        # gripper.CloseGripper()
     pass
 
     def perform_second_phase(self):
@@ -584,9 +584,9 @@ def main():
     try:
         # INIT
         tutorial = MoveGroupUR5PythonInterface()
-        gripper = Gripper()
-        gripper.gripper_init()
-        gripper.CloseGripper()
+        # gripper = Gripper()
+        # gripper.gripper_init()
+        # gripper.CloseGripper()
         # tutorial.init_rotational_position()
 
         # SCAN FOR FIRST TARGET
@@ -602,7 +602,7 @@ def main():
             else:
                 print("Error: Coordinates out of range. Try again.")
 
-        tutorial.perform_first_phase(x_bottle, y_bottle, gripper)
+        tutorial.perform_first_phase(x_bottle, y_bottle, gripper=None)
 
         # # #USE GRIPPER
 
