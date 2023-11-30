@@ -118,7 +118,9 @@ class UR5eMoveGroupPythonInterface(object):
         for joint_state in joint_states[4:]:
             self.go_to_joint_state(joint_state)
 
-        # Put the bottle back
+        # TODO: Put some time.sleep value here so that the bottle is tilted over the cup for some time
+
+        # Now that the liquid is poured, start to return the bottle
         for joint_state in joint_states[6:2:-1]:
             self.go_to_joint_state(joint_state)
 
