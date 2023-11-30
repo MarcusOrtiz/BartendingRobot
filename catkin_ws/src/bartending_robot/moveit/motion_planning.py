@@ -96,24 +96,18 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states = [
             # Perfectly horizontal
             (0, 0, 0, 0, 0, 0),
-
             # Initial, conservative bend that avoids singularities
-            (-pi/12, -pi/3, pi/3+0.5, 0, 0, -0.5),
-
+            (-pi / 12, -pi / 3, pi / 3 + 0.5, 0, 0, -0.5),
             # Bend more: Get EE to a low enough height such that it can swing sideways and grab bottle
-            (-pi/12, -0.97, pi/3+0.97, 0, 0, -pi/3),
-
+            (-pi / 12, -0.97, pi / 3 + 0.97, 0, 0, -pi / 3),
             # Swing toward bottle
-            (pi/120, -0.97, pi/3+0.97, 0, 0, -pi/3),
-
+            (pi / 120, -0.97, pi / 3 + 0.97, 0, 0, -pi / 3),
             # Raise bottle high enough so we don't collide with other items on the table
-            (pi/120, -pi/3, pi/3, 0, 0, 0),
-
+            (pi / 120, -pi / 3, pi / 3, 0, 0, 0),
             # Position the bottle near the cup right before pouring
-            (pi/4+0.2, -1.5, 1.8, 0, 0, 0),
-
+            (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
             # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-            (pi/4+0.2, -1.5, 1.8, 0, 0, pi/2-0.2)
+            (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2),
         ]
 
         for joint_state in joint_states[:4]:
@@ -127,9 +121,9 @@ class UR5eMoveGroupPythonInterface(object):
         # Put the bottle back
         for joint_state in joint_states[6:2:-1]:
             self.go_to_joint_state(joint_state)
-        
+
         # TODO: open gripper
-        
+
         for joint_state in joint_states[2::-1]:
             self.go_to_joint_state(joint_state)
 def main():
