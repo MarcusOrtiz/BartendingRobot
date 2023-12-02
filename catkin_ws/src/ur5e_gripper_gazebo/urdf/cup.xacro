@@ -25,7 +25,7 @@
             </inertial>
         </link>
         <gazebo reference="cup">
-            <material>Gazebo/Red</material>
+            <material>Gazebo/Orange</material>
         </gazebo>
 
     </xacro:macro>
