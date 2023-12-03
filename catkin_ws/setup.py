@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import os
 import time
-from pathlib import Path
+
 
 class Scene(object):
     def __init__(self):
@@ -9,7 +9,6 @@ class Scene(object):
 
     def source_workspace(self):
         os.system("bash -c \"source $HOME/BartendingRobot/catkin_ws/devel/setup.bash\"")
-        os.chdir(f"{os.path.expanduser('~')}/BartendingRobot/catkin_ws")
 
     def launchGazebo(self):
         os.system("roslaunch ur5e_gripper_gazebo ur5e_gripper_bringup.launch &")
