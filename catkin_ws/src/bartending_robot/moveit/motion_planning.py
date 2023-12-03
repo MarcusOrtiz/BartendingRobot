@@ -106,7 +106,7 @@ class UR5eMoveGroupPythonInterface(object):
     def pick_and_pour_right(self):
         joint_states = [
             # Perfectly horizontal
-            (0, 0, 0, 0, 0, 0),
+            (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
             # Initial, conservative bend that avoids singularities
             (-pi / 12, -pi / 3, pi / 3 + 0.5, 0, 0, -0.5),
             # Bend more: Get EE to a low enough height such that it can swing sideways and grab bottle
