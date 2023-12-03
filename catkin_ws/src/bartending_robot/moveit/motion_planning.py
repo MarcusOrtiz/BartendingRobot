@@ -92,9 +92,14 @@ class UR5eMoveGroupPythonInterface(object):
         joint_goal = self.move_group.get_current_joint_values()
         joint_goal = angles
 
+        # The go command can be called with joint values, poses, or without any
+        # parameters if you have already set the pose or joint target for the group
         self.move_group.go(joint_goal, wait=True)
+
+        # Calling ``stop()`` ensures that there is no residual movement
         self.move_group.stop()
 
+        # For testing:
         current_joints = self.move_group.get_current_joint_values()
         return all_close(joint_goal, current_joints, 0.01)
 
