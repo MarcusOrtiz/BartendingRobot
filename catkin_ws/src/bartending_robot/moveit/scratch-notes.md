@@ -36,14 +36,14 @@
                         - MESHES
                         - `urdf/robotiq_arg2f.xacro`
                             - MESHES
-        - `config/ur5e_controllers.yaml` # there is an addition here
-        - `launch/inc/ur_control.launch.xml` # no difference  
-    - `launch/moveit_planning_execution.launch` # similar to ws_moveit
-        - `launch/move_group.launch` # similar to ws_moveit
-            - `launch/planning_context.launch` # similar
-                - `urdf/ur5e_robot.srdf` # compare to ~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ur5e.srdf # VERY DIFFERENT
-                - `config/joint_limits.yaml` # somewhat different
-                - `config/kinematics.yaml` # somewhat different
+        - `config/ur5e_controllers.yaml` # COPIED TO FINAL; there are additions here
+        - `launch/inc/ur_control.launch.xml` # no difference, no action needed 
+    - `launch/moveit_planning_execution.launch` # COPIED TO FINAL; similar to ws_moveit except for path
+        - `launch/move_group.launch` # COPIED TO FINAL; similar to ws_moveit except for paths
+            - `launch/planning_context.launch` # COPIED TO FINAL; similar except for paths
+                - `urdf/ur5e_robot.srdf` # compare to ~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ur5e.srdf # COPIED TO FINAL (BUT STILL NEEDS COMPARISON AND EDITS) VERY DIFFERENT
+                - `config/joint_limits.yaml` # COPIED TO FINAL; somewhat different
+                - `config/kinematics.yaml` # COPIED TO FINAL; somewhat different
             - `launch/trajectory_execution.launch.xml` # COPIED TO FINAL; similar except for path
                 - `launch/ur5e_moveit_controller_manager.launch.xml` # COPIED TO FINAL; similar except for path
                     - `config/ros_controllers.yaml` # COPIED TO FINAL; there are additions here
