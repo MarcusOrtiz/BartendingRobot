@@ -27,9 +27,9 @@
 # Of Jonathan's demo files, inspected these:
 /home/jgt16/catkin_ws/src/ur5e_robotiq2f140_demo/
 - `launch.py` # similar
-    - `launch/ur5e_bringup.launch` # similar
-        - `launch/inc/load_ur5e.launch.xml` # similar
-            - `launch/inc/load_ur.launch.xml` # similar
+    - `launch/ur5e_bringup.launch` # COPIED TO FINAL, similar except for some paths and "gripper"
+        - `launch/inc/load_ur5e.launch.xml` # LEFT AS IS, similar
+            - `launch/inc/load_ur.launch.xml` # LEFT AS IS, similar
                 - `urdf/ur.xacro` # BIG DIFF
                     - `urdf/robotiq_arg2f_140_model_macro.xacro`
                         - `urdf/robotiq_arg2f_transmission.xacro`
