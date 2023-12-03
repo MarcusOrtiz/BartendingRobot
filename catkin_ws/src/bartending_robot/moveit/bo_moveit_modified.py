@@ -594,8 +594,8 @@ def main():
         # Full system integration, get coords. from CV
         out_of_range = True
         while out_of_range:
-            x_bottle = float(input("Enter bottle x coord. "))
-            y_bottle = float(input("Enter bottle y coord. "))
+            x_bottle = float(input("Enter bottle x coord. Good default value is 0.3"))
+            y_bottle = float(input("Enter bottle y coord. Good default value is 0.3"))
             e_dist = math.sqrt(math.pow(x_bottle, 2) + math.pow(y_bottle, 2))
             if e_dist < 0.5453264 and e_dist > 0.2: # Maximum distance, reaching furthest corner of table
                 out_of_range = False
@@ -613,8 +613,8 @@ def main():
         # Full system integration, get coords. from CV
         out_of_range2 = True
         while out_of_range2:
-            x_cup = float(input("Enter cup x coord. "))
-            y_cup = float(input("Enter cup y coord. "))
+            x_cup = float(input("Enter cup x coord. Good default value is 0.25"))
+            y_cup = float(input("Enter cup y coord. Good default value is 0.25"))
             e_dist2 = math.sqrt(math.pow(x_cup, 2) + math.pow(y_cup, 2))
             # Max. Distance based on 0.2 / 0.3 dimensional ratio
             # causing EE to reach limit before collision with self
