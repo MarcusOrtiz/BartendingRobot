@@ -101,10 +101,10 @@ class UR5eMoveGroupPythonInterface(object):
             (-pi/12, -pi/3, pi/3+0.5, 0, 0, -0.5),
 
             # Bend more: Get EE to a low enough height such that it can swing sideways and grab bottle
-            (-pi/12, -pi/3, pi/3+1, 0, 0, -1),
+            (-pi/12, -0.97, pi/3+0.97, 0, 0, -pi/3),
 
             # Swing toward bottle
-            (pi/120, -pi/3, pi/3+1, 0, 0, -1),
+            (pi/120, -0.97, pi/3+0.97, 0, 0, -pi/3),
 
             # Raise bottle high enough so we don't collide with other items on the table
             (pi/120, -pi/3, pi/3, 0, 0, 0),
