@@ -128,10 +128,16 @@ class UR5eMoveGroupPythonInterface(object):
 
         for joint_state in joint_states[2::-1]:
             self.go_to_joint_state(joint_state)
+
+    def pick_and_pour_green(self):
+        joint_states = []
+
+
 def main():
     try:
         umg = UR5eMoveGroupPythonInterface()
         umg.pick_and_pour_blue()
+        umg.pick_and_pour_green()
     except rospy.ROSInterruptException:
         return
     except KeyboardInterrupt:
