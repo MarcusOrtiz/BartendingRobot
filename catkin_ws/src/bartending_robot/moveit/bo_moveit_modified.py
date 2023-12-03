@@ -12,7 +12,7 @@ import rospy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
-from gripperClass import *
+# from gripperClass import *
 
 import math
 from time import sleep
@@ -348,7 +348,7 @@ class MoveGroupUR5PythonInterface(object):
             joint_goal[5] = 0 # will be ultimate orientation 
         
 
-        gripper.OpenGripper()
+        # gripper.OpenGripper()
 
         move_group.go(joint_goal, wait=True)
 
@@ -537,7 +537,7 @@ class MoveGroupUR5PythonInterface(object):
         self.move_to_target(x_bottle, y_bottle, shoulder)
 
         # # grab the bottle
-        gripper.CloseGripper()
+        # gripper.CloseGripper()
     pass
 
     def perform_second_phase(self):
@@ -584,9 +584,9 @@ def main():
     try:
         # INIT
         tutorial = MoveGroupUR5PythonInterface()
-        gripper = Gripper()
-        gripper.gripper_init()
-        gripper.CloseGripper()
+        # gripper = Gripper()
+        # gripper.gripper_init()
+        # gripper.CloseGripper()
         # tutorial.init_rotational_position()
 
         # SCAN FOR FIRST TARGET
@@ -594,15 +594,15 @@ def main():
         # Full system integration, get coords. from CV
         out_of_range = True
         while out_of_range:
-            x_bottle = float(input("Enter bottle x coord. "))
-            y_bottle = float(input("Enter bottle y coord. "))
+            x_bottle = float(input("Enter bottle x coord. Good default value is 0.3"))
+            y_bottle = float(input("Enter bottle y coord. Good default value is 0.3"))
             e_dist = math.sqrt(math.pow(x_bottle, 2) + math.pow(y_bottle, 2))
             if e_dist < 0.5453264 and e_dist > 0.2: # Maximum distance, reaching furthest corner of table
                 out_of_range = False
             else:
                 print("Error: Coordinates out of range. Try again.")
 
-        tutorial.perform_first_phase(x_bottle, y_bottle, gripper)
+        tutorial.perform_first_phase(x_bottle, y_bottle, gripper=None)
 
         # # #USE GRIPPER
 
@@ -613,8 +613,8 @@ def main():
         # Full system integration, get coords. from CV
         out_of_range2 = True
         while out_of_range2:
-            x_cup = float(input("Enter cup x coord. "))
-            y_cup = float(input("Enter cup y coord. "))
+            x_cup = float(input("Enter cup x coord. Good default value is 0.25"))
+            y_cup = float(input("Enter cup y coord. Good default value is 0.25"))
             e_dist2 = math.sqrt(math.pow(x_cup, 2) + math.pow(y_cup, 2))
             # Max. Distance based on 0.2 / 0.3 dimensional ratio
             # causing EE to reach limit before collision with self
