@@ -92,7 +92,7 @@ class UR5eMoveGroupPythonInterface(object):
         current_joints = self.move_group.get_current_joint_values()
         return all_close(joint_goal, current_joints, 0.01)
 
-    def pick_and_pour_blue(self):
+    def pick_and_pour_right(self):
         joint_states = [
             # Perfectly horizontal
             (0, 0, 0, 0, 0, 0),
@@ -129,15 +129,15 @@ class UR5eMoveGroupPythonInterface(object):
         for joint_state in joint_states[2::-1]:
             self.go_to_joint_state(joint_state)
 
-    def pick_and_pour_green(self):
+    def pick_and_pour_left(self):
         joint_states = []
 
 
 def main():
     try:
         umg = UR5eMoveGroupPythonInterface()
-        umg.pick_and_pour_blue()
-        umg.pick_and_pour_green()
+        umg.pick_and_pour_right()
+        umg.pick_and_pour_left()
     except rospy.ROSInterruptException:
         return
     except KeyboardInterrupt:
