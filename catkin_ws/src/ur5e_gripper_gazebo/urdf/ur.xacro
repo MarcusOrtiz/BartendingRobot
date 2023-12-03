@@ -84,12 +84,4 @@
     <child link="tool0_controller"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-
-  <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/robotiq_arg2f_140_model_macro.xacro"/>
-  <xacro:robotiq_arg2f_140 prefix="" />
-  <joint name="ee_joint" type="fixed">
-    <parent link="tool0" />
-    <child link="robotiq_arg2f_base_link" />
-  </joint>
-
 </robot>
