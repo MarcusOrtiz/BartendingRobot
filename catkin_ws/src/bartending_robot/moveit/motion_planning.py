@@ -82,6 +82,15 @@ class UR5eMoveGroupPythonInterface(object):
         self.display_trajectory_publisher = display_trajectory_publisher
         self.eef_link = eef_link
 
+    def go_to_joint_state(self, angles):
+        joint_goal = self.move_group.get_current_joint_values()
+        joint_goal = angles
+
+        self.move_group.go(joint_goal, wait=True)
+        self.move_group.stop()
+
+        current_joints = self.move_group.get_current_joint_values()
+        return all_close(joint_goal, current_joints, 0.01)
 
 def main():
     try:
