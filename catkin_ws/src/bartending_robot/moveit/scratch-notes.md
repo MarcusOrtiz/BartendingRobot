@@ -13,15 +13,15 @@
                     - `urdf/platform.xacro`
         - `config/ur5e_gripper_controllers.yaml`
         - `launch/inc/ur_control.launch.xml`
-    - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/moveit_planning_execution.launch
-        - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/move_group.launch
-            - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/planning_context.launch
-                - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ur5e.srdf
-                - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/config/joint_limits.yaml
-                - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/config/kinematics.yaml
-            - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/trajectory_execution.launch.xml
-                - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/ur5e_moveit_controller_manager.launch.xml
-                    - /home/jgt16/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ros_controllers.yaml
+    - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/moveit_planning_execution.launch`
+        - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/move_group.launch`
+            - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/planning_context.launch`
+                - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ur5e.srdf`
+                - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/joint_limits.yaml`
+                - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/kinematics.yaml`
+            - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/trajectory_execution.launch.xml`
+                - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/launch/ur5e_moveit_controller_manager.launch.xml`
+                    - `~/ws_moveit/src/universal_robot/ur5e_moveit_config/config/ros_controllers.yaml`
 
 
 # Of Jonathan's demo files, inspected these:
