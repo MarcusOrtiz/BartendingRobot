@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+
+# Reference: https://github.com/ros-planning/moveit_tutorials/blob/master/doc/move_group_python_interface/scripts/move_group_python_interface_tutorial.py
+
+# Some functions, e.g. `all_close`, were copied from the above tutorial
+
 import sys
 import rospy
 import moveit_commander
