@@ -135,9 +135,16 @@ class UR5eMoveGroupPythonInterface(object):
 
 def main():
     try:
-        umg = UR5eMoveGroupPythonInterface()
-        umg.pick_and_pour_right()
-        umg.pick_and_pour_left()
+        sim_or_phys = input(
+            "Are you running a simulation or physical system? \n"
+            "[1] Simulation  [2] Physical : "
+        )
+        if sim_or_phys in ["1", "2"]:
+            umg = UR5eMoveGroupPythonInterface()
+            umg.pick_and_pour_right()
+            umg.pick_and_pour_left()
+        else:
+            print("Error: Choose [1] Simulation or [2] Physical. Exiting program.")
     except rospy.ROSInterruptException:
         return
     except KeyboardInterrupt:
