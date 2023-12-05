@@ -147,7 +147,7 @@ class UR5eMoveGroupPythonInterface(object):
         ## the plan that has already been computed:
         self.move_group.execute(plan, wait=True)
 
-    def pick_and_pour_right(self):
+    def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
         pass
 
     def pick_and_pour_left(self):
@@ -173,7 +173,7 @@ def main():
                 gripper = Gripper()
                 gripper.gripper_init()
 
-            umg.pick_and_pour_right()
+            umg.pick_and_pour_right(bottle_x, bottle_y, cup_x, cup_y, gripper)
             umg.pick_and_pour_left()
         else:
             print("Error: Choose [1] Simulation or [2] Physical. Exiting program.")
