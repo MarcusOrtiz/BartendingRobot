@@ -5,6 +5,7 @@
 # Some functions, e.g. `all_close`, were copied from the above tutorial
 
 import sys
+import time
 import copy
 import rospy
 import moveit_commander
@@ -185,6 +186,15 @@ class UR5eMoveGroupPythonInterface(object):
         cartesian_plan, _ = self.plan_cartesian_path(z=0.3)
         self.execute_plan(cartesian_plan)
         joint_states["lift"] = tuple(self.move_group.get_current_joint_values())
+
+        # Position the bottle near the cup right before pouring
+        self.go_to_joint_state(*joint_states["near_cup"])
+
+        # Tilt the bottle so that bottle mouth is tilted downward toward the cup
+        self.go_to_joint_state(*joint_states["pour"])
+
+        # Pause movement while pouring
+        time.sleep(3)
 
     def pick_and_pour_left(self):
         joint_states = []
