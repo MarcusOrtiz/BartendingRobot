@@ -5,6 +5,7 @@
 # Some functions, e.g. `all_close`, were copied from the above tutorial
 
 import sys
+import copy
 import rospy
 import moveit_commander
 import moveit_msgs.msg
@@ -108,6 +109,43 @@ class UR5eMoveGroupPythonInterface(object):
         # For testing:
         current_joints = self.move_group.get_current_joint_values()
         return all_close(joint_goal, current_joints, 0.01)
+
+    def plan_cartesian_path(self, scale=1, x=0, y=0, z=0):
+        ## You can plan a Cartesian path directly by specifying a list of waypoints
+        ## for the end-effector to go through. If executing  interactively in a
+        ## Python shell, set scale = 1.0.
+        ##
+        waypoints = []
+
+        wpose = self.move_group.get_current_pose().pose
+        wpose.position.x += scale * x
+        wpose.position.y += scale * y
+        wpose.position.z += scale * z
+        waypoints.append(copy.deepcopy(wpose))
+
+        # We want the Cartesian path to be interpolated at a resolution of 1 cm
+        # which is why we will specify 0.01 as the eef_step in Cartesian
+        # translation.  We will disable the jump threshold by setting it to 0.0,
+        # ignoring the check for infeasible jumps in joint space, which is sufficient
+        # for this tutorial.
+        (plan, fraction) = self.move_group.compute_cartesian_path(
+            waypoints, 0.01, 0.0  # waypoints to follow  # eef_step
+        )  # jump_threshold
+
+        # Note: We are just planning, not asking move_group to actually move the robot yet:
+        return plan, fraction
+
+    def display_trajectory(self, plan):
+        display_trajectory = moveit_msgs.msg.DisplayTrajectory()
+        display_trajectory.trajectory_start = self.robot.get_current_state()
+        display_trajectory.trajectory.append(plan)
+        # Publish
+        self.display_trajectory_publisher.publish(display_trajectory)
+
+    def execute_plan(self, plan):
+        ## Use execute if you would like the robot to follow
+        ## the plan that has already been computed:
+        self.move_group.execute(plan, wait=True)
 
     def pick_and_pour_right(self):
         joint_states = [
