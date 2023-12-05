@@ -148,7 +148,15 @@ class UR5eMoveGroupPythonInterface(object):
         self.move_group.execute(plan, wait=True)
 
     def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
-        pass
+        joint_states = {
+            "start": (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
+            "init_right": None,
+            "low": None,
+            "at_bottle_loc": None,
+            "lift": None,
+            "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
+            "pour": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2)
+        }
 
     def pick_and_pour_left(self):
         joint_states = []
