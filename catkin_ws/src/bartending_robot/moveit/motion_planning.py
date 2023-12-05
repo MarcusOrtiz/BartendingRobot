@@ -146,10 +146,12 @@ class UR5eMoveGroupPythonInterface(object):
 
 def main():
     try:
-        sim_or_phys = input(
-            "Are you running a simulation or physical system? \n"
-            "[1] Simulation  [2] Physical : "
-        )
+        sim_or_phys = "1"
+        # TODO: Uncomment the following line when you've written out a working gripper in simulation
+        # sim_or_phys = input(
+        #     "Are you running a simulation or physical system? \n"
+        #     "[1] Simulation  [2] Physical : "
+        # )
         if sim_or_phys in ["1", "2"]:
             umg = UR5eMoveGroupPythonInterface()
             umg.pick_and_pour_right()
