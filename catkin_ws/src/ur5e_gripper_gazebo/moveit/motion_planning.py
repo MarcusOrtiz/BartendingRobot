@@ -150,14 +150,19 @@ class UR5eMoveGroupPythonInterface(object):
 
 def main():
     try:
-        sim_or_phys = "1"
-        # TODO: Uncomment the following line when you've written out a working gripper in simulation
-        # sim_or_phys = input(
-        #     "Are you running a simulation or physical system? \n"
-        #     "[1] Simulation  [2] Physical : "
-        # )
+        sim_or_phys = input(
+            "Are you running a simulation or physical system? \n"
+            "[1] Simulation  [2] Physical : "
+        )
+
         if sim_or_phys in ["1", "2"]:
             umg = UR5eMoveGroupPythonInterface()
+            bottle_x = float(input("Bottle x coordinate: "))  # Default for testing: 0.35
+            bottle_y = float(input("Bottle y coordinate: "))  # Default for testing: 0.45
+            cup_x = 0
+            cup_y = 0.65
+            gripper = None
+
             umg.pick_and_pour_right()
             umg.pick_and_pour_left()
         else:
