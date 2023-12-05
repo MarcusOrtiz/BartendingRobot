@@ -25,7 +25,7 @@ source devel/setup.bash
 make execution
 ```
 
-3. To run the script that picks a bottle up from the **right** hand side,
+3. To pick and pour from either side,
     - Right hand side
     ```
     catkin_ws/src/ur5e_gripper_gazebo/moveit
