@@ -13,6 +13,8 @@ import geometry_msgs.msg
 from math import pi, tau, dist, fabs, cos
 from moveit_commander.conversions import pose_to_list
 
+from gripperClass import *
+
 
 def all_close(goal, actual, tolerance):
     """
@@ -162,6 +164,10 @@ def main():
             cup_x = 0
             cup_y = 0.65
             gripper = None
+
+            if sim_or_phys == "2":  # physical
+                gripper = Gripper()
+                gripper.gripper_init()
 
             umg.pick_and_pour_right()
             umg.pick_and_pour_left()
