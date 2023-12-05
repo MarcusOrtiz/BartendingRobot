@@ -105,7 +105,7 @@ class UR5eMoveGroupPythonInterface(object):
 
     def pick_and_pour_right(self):
         joint_states = [
-            # Perfectly horizontal
+            # Physical system start state
             (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
             # Initial, conservative bend that avoids singularities
             (-pi / 12, -pi / 3, pi / 3 + 0.5, 0, 0, -0.5),
