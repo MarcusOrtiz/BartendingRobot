@@ -196,6 +196,18 @@ class UR5eMoveGroupPythonInterface(object):
         # Pause movement while pouring
         time.sleep(3)
 
+        # Return to bottle's original location
+        for state_name in ["near_cup", "lift", "at_bottle_loc"]:
+            self.go_to_joint_state(*joint_states[state_name])
+
+        # Let go of bottle
+        if gripper is not None:
+            gripper.OpenGripper()
+
+        # Return UR5e to start state
+        for state_name in ["low", "init_right", "start"]:
+            self.go_to_joint_state(*joint_states[state_name])
+
     def pick_and_pour_left(self):
         joint_states = []
 
