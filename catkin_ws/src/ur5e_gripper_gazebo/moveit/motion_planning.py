@@ -177,6 +177,15 @@ class UR5eMoveGroupPythonInterface(object):
         self.execute_plan(cartesian_plan)
         joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
 
+        # Grab bottle
+        if gripper is not None:
+            gripper.CloseGripper()
+
+        # Lift bottle
+        cartesian_plan, _ = self.plan_cartesian_path(z=0.3)
+        self.execute_plan(cartesian_plan)
+        joint_states["lift"] = tuple(self.move_group.get_current_joint_values())
+
     def pick_and_pour_left(self):
         joint_states = []
 
