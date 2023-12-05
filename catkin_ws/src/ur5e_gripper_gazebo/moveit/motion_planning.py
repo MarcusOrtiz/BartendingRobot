@@ -88,9 +88,13 @@ class UR5eMoveGroupPythonInterface(object):
         self.display_trajectory_publisher = display_trajectory_publisher
         self.eef_link = eef_link
 
-    def go_to_joint_state(self, angles):
+    def go_to_joint_state(self, j0=None, j1=None, j2=None, j3=None, j4=None, j5=None):
         joint_goal = self.move_group.get_current_joint_values()
-        joint_goal = angles
+        new_joint_values = [j0, j1, j2, j3, j4, j5]
+
+        for i in range(len(new_joint_values)):
+            if new_joint_values[i] is not None:
+                joint_goal[i] = new_joint_values[i]
 
         # The go command can be called with joint values, poses, or without any
         # parameters if you have already set the pose or joint target for the group
