@@ -148,41 +148,7 @@ class UR5eMoveGroupPythonInterface(object):
         self.move_group.execute(plan, wait=True)
 
     def pick_and_pour_right(self):
-        joint_states = [
-            # Physical system start state
-            (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
-            # Initial, conservative bend that avoids singularities
-            (-pi / 12, -pi / 3, pi / 3 + 0.5, 0, 0, -0.5),
-            # Bend more: Get EE to a low enough height such that it can swing sideways and grab bottle
-            (-pi / 12, -0.97, pi / 3 + 0.97, 0, 0, -pi / 3),
-            # Swing toward bottle
-            (pi / 120, -0.97, pi / 3 + 0.97, 0, 0, -pi / 3),
-            # Raise bottle high enough so we don't collide with other items on the table
-            (pi / 120, -pi / 3, pi / 3, 0, 0, 0),
-            # Position the bottle near the cup right before pouring
-            (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
-            # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-            (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2),
-        ]
-
-        for joint_state in joint_states[:4]:
-            self.go_to_joint_state(joint_state)
-
-        # TODO: close gripper
-
-        for joint_state in joint_states[4:]:
-            self.go_to_joint_state(joint_state)
-
-        # TODO: Put some time.sleep value here so that the bottle is tilted over the cup for some time
-
-        # Now that the liquid is poured, start to return the bottle
-        for joint_state in joint_states[6:2:-1]:
-            self.go_to_joint_state(joint_state)
-
-        # TODO: open gripper
-
-        for joint_state in joint_states[2::-1]:
-            self.go_to_joint_state(joint_state)
+        pass
 
     def pick_and_pour_left(self):
         joint_states = []
