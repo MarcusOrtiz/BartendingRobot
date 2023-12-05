@@ -152,7 +152,7 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states = {
             "start": (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
             "init_right": None,
-            "low": None,
+            "low": (-0.5735, -1.2376, 2.3043, -1.0618, -0.5733, 0.0037),
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
