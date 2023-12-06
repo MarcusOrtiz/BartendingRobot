@@ -152,7 +152,7 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states = {
             "start": (tau / 2, -tau / 4, tau / 4, 0, 0, 0),
             "init_right": None,
-            "low": (-0.5735, -1.2376, 2.3043, -1.0618, -0.5733, 0.0037),
+            "low": (0.8849, -1.2733, 2.4711, -1.1942, -0.6860, 0.0080),
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
@@ -166,7 +166,7 @@ class UR5eMoveGroupPythonInterface(object):
         self.go_to_joint_state(j0=tau * 5 / 24)
         joint_states["init_right"] = tuple(self.move_group.get_current_joint_values())
 
-        # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
+        # Get EE to lower than the bottle mouth. The resulting z should be ~0.1
         self.go_to_joint_state(*joint_states["low"])
 
         # Move the EE to the bottle: Align x first, then y. Don't align simultaneously to avoid collision
