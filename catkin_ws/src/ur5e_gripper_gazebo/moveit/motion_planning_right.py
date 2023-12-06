@@ -155,7 +155,7 @@ class UR5eMoveGroupPythonInterface(object):
             "low": (0.8851, -1.3416, 2.4609, -1.1173, -0.6813, 0.0059),
             "at_bottle_loc": None,
             "lift": None,
-            "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
+            "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
             "pour": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2)
         }
 
