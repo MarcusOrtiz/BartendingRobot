@@ -93,8 +93,9 @@ def run(
         source = check_file(source)  # download
 
     # Directories
-    save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
-    (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+    # save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
+    save_dir = Path(ROOT) / '..' / 'data'
+    (save_dir / 'predictions' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Load model
     device = select_device(device)
@@ -160,7 +161,11 @@ def run(
 
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # im.jpg
-            txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
+            txt_path = str((save_dir / 'predictions' / p.stem).resolve()) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
+
+            # txt_path = ROOT / '..' / 'data' / p.stem
+            # txt_path = str(txt_path.resolve()) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
+            print(f"txt_path: {txt_path}")
             s += '%gx%g ' % im.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
@@ -175,6 +180,8 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Write results
+                os.remove(f'{txt_path}.txt') if os.path.exists(f'{txt_path}.txt') else None  # remove existing file
+
                 for *xyxy, conf, cls in reversed(det):
                     c = int(cls)  # integer class
                     label = names[c] if hide_conf else f'{names[c]}'
@@ -185,10 +192,14 @@ def run(
                         write_to_csv(p.name, label, confidence_str)
 
                     if save_txt:  # Write to file
-                        xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                        line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
+                        xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / 1).view(-1).tolist()  # normalized xywh
+                        line = (label, *xywh, conf) if save_conf else (label, *xywh)  # label format
+                        # Convert all elements to string, formatting floats to 4 decimal places
+                        line_str = [f'{item}' if isinstance(item, float) else str(item) for item in line]
+
+                        # Join elements with a tab and write to file
                         with open(f'{txt_path}.txt', 'a') as f:
-                            f.write(('%g ' * len(line)).rstrip() % line + '\n')
+                            f.write('\t'.join(line_str) + '\n')
 
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
