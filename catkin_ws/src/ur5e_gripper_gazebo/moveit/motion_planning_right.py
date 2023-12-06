@@ -209,7 +209,7 @@ class UR5eMoveGroupPythonInterface(object):
             gripper.OpenGripper()
 
         # Return UR5e to start state
-        for state_name in ["low", "init_right", "start"]:
+        for state_name in ["near_bottle_loc", "low", "init_right", "start"]:
             self.go_to_joint_state(*joint_states[state_name])
 
     def pick_and_pour_left(self):
