@@ -150,31 +150,34 @@ class UR5eMoveGroupPythonInterface(object):
 
     def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
         joint_states = {
-            "start": (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
-            "init_right": None,
-            "low": (-0.5735, -1.2376, 2.3043, -1.0618, -0.5733, 0.0037),
+            "start": (tau / 2, -tau / 4, tau / 4, 0, 0, 0),
+            "init_right": (1.7843, -0.6354, 0.3967, 0.2772, -0.5714, -0.0020),
+            "low": (1.7845, -0.5398, 0.9658, -0.4091, -0.5717, -0.0021),
+            "near_bottle_loc": None,
             "at_bottle_loc": None,
             "lift": None,
-            "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
-            "pour": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2)
+            "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
+            "pour": None
         }
 
         # Start state
         self.go_to_joint_state(*joint_states["start"])
 
-        # Move right
-        self.go_to_joint_state(j0=-pi / 12)
-        joint_states["init_right"] = tuple(self.move_group.get_current_joint_values())
+        # Move to the right of the platform. These joint values are set so that the EE is oriented 45 deg in the world frame
+        self.go_to_joint_state(*joint_states["init_right"])
 
         # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
         self.go_to_joint_state(*joint_states["low"])
 
-        # Move the EE to the bottle: Align x first, then y. Don't align simultaneously to avoid collision
+        # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
-        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x - x0)
+        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x + 0.25 - x0, y=bottle_y + 0.25 - y0)
         self.execute_plan(cartesian_plan)
-        cartesian_plan, _ = self.plan_cartesian_path(y=bottle_y - y0 - 0.18)  # 0.18 is a necessary offset
+        joint_states["near_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
+
+        # Move the EE to the bottle diagonally
+        cartesian_plan, _ = self.plan_cartesian_path(x=-0.13, y=-0.13)
         self.execute_plan(cartesian_plan)
         joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
 
@@ -191,7 +194,8 @@ class UR5eMoveGroupPythonInterface(object):
         self.go_to_joint_state(*joint_states["near_cup"])
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-        self.go_to_joint_state(*joint_states["pour"])
+        self.go_to_joint_state(j5=1.3708)
+        joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
         # Pause movement while pouring
         time.sleep(3)
@@ -205,7 +209,7 @@ class UR5eMoveGroupPythonInterface(object):
             gripper.OpenGripper()
 
         # Return UR5e to start state
-        for state_name in ["low", "init_right", "start"]:
+        for state_name in ["near_bottle_loc", "low", "init_right", "start"]:
             self.go_to_joint_state(*joint_states[state_name])
 
     def pick_and_pour_left(self):
@@ -220,10 +224,10 @@ def main():
         )
 
         if sim_or_phys in ["1", "2"]:
-            bottle_x = float(input("Bottle x coordinate: "))  # Default for testing: 0.35
-            bottle_y = float(input("Bottle y coordinate: "))  # Default for testing: 0.45
-            cup_x = 0
-            cup_y = 0.65
+            bottle_x = float(input("Bottle x coordinate: "))
+            bottle_y = float(input("Bottle y coordinate: "))
+            cup_x = -0.65
+            cup_y = 0
             gripper = None
             umg = UR5eMoveGroupPythonInterface()
 
