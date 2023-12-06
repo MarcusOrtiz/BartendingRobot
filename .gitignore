@@ -3,3 +3,5 @@
 .idea/*
 *.DS_Store
 venv/
+__pycache__/
+catkin_ws/src/CMakeLists.txt
