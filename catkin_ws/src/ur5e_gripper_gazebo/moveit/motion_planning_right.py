@@ -175,6 +175,9 @@ class UR5eMoveGroupPythonInterface(object):
         cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x + 0.25 - x0, y=bottle_y + 0.25 - y0)
         self.execute_plan(cartesian_plan)
         joint_states["near_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
+
+        # Move the EE to the bottle diagonally
+        cartesian_plan, _ = self.plan_cartesian_path(x=-0.13, y=-0.13)
         self.execute_plan(cartesian_plan)
         joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
 
