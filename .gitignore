@@ -2,3 +2,4 @@
 */devel/
 .idea/*
 *.DS_Store
+venv/
