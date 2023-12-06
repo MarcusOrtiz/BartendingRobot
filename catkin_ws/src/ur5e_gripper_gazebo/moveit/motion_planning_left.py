@@ -374,7 +374,7 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 1.5708/2) 
+        tutorial.go_to_joint_state(2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 2.0944) 
 
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
