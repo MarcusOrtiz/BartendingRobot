@@ -169,12 +169,12 @@ class UR5eMoveGroupPythonInterface(object):
         # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
         self.go_to_joint_state(*joint_states["low"])
 
-        # Move the EE to the bottle: Align y first, then x. Don't align simultaneously to avoid collision
+        # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
-        cartesian_plan, _ = self.plan_cartesian_path(y=bottle_y - y0)
+        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x + 0.25 - x0, y=bottle_y + 0.25 - y0)
         self.execute_plan(cartesian_plan)
-        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x - x0 + 0.18)  # 0.18 is a necessary offset
+        joint_states["near_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
         self.execute_plan(cartesian_plan)
         joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
 
