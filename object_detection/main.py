@@ -7,7 +7,7 @@ subprocess.run(camera_command)
 detection_command = ["python", "yolov5/detect.py", "--weights",
                      "yolov5/bottle_weights/all_resizing600.pt",
                      "--imgsz", "1280", "720", "--conf", "0.7",
-                     "--source", "data/measurement_data/25_1_Color.png",
+                     "--source", "data/environment_photo.png",
                      "--save-txt"]
 subprocess.run(detection_command)
 
@@ -15,7 +15,7 @@ subprocess.run(detection_command)
 bottle_dims = {}
 
 # Open the file
-with open('./data/predictions/25_1_Color.txt', 'r') as file:
+with open('./data/predictions/environment_photo.txt', 'r') as file:
     # Iterate over each line
     for line in file:
         # Split the line into parts
