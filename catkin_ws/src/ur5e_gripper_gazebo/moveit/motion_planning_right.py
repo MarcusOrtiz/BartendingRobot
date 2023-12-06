@@ -156,7 +156,7 @@ class UR5eMoveGroupPythonInterface(object):
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
-            "pour": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2)
+            "pour": None
         }
 
         # Start state
@@ -191,7 +191,8 @@ class UR5eMoveGroupPythonInterface(object):
         self.go_to_joint_state(*joint_states["near_cup"])
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-        self.go_to_joint_state(*joint_states["pour"])
+        self.go_to_joint_state(j5=1.3708)
+        joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
         # Pause movement while pouring
         time.sleep(3)
