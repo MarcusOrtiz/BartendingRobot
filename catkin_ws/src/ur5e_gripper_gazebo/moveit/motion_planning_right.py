@@ -150,7 +150,7 @@ class UR5eMoveGroupPythonInterface(object):
 
     def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
         joint_states = {
-            "start": (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
+            "start": (tau / 2, -tau / 4, tau / 4, 0, 0, 0),
             "init_right": None,
             "low": (-0.5735, -1.2376, 2.3043, -1.0618, -0.5733, 0.0037),
             "at_bottle_loc": None,
@@ -163,7 +163,7 @@ class UR5eMoveGroupPythonInterface(object):
         self.go_to_joint_state(*joint_states["start"])
 
         # Move right
-        self.go_to_joint_state(j0=-pi / 12)
+        self.go_to_joint_state(j0=tau * 5 / 24)
         joint_states["init_right"] = tuple(self.move_group.get_current_joint_values())
 
         # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
