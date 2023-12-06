@@ -153,6 +153,7 @@ class UR5eMoveGroupPythonInterface(object):
             "start": (tau / 2, -tau / 4, tau / 4, 0, 0, 0),
             "init_right": (1.7843, -0.6354, 0.3967, 0.2772, -0.5714, -0.0020),
             "low": (1.7845, -0.5398, 0.9658, -0.4091, -0.5717, -0.0021),
+            "near_bottle_loc": None,
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
