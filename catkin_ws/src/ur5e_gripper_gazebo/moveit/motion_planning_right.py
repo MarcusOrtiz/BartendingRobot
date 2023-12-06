@@ -151,8 +151,8 @@ class UR5eMoveGroupPythonInterface(object):
     def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
         joint_states = {
             "start": (tau / 2, -tau / 4, tau / 4, 0, 0, 0),
-            "init_right": None,
-            "low": (0.8851, -1.3416, 2.4609, -1.1173, -0.6813, 0.0059),
+            "init_right": (1.7843, -0.6354, 0.3967, 0.2772, -0.5714, -0.0020),
+            "low": (1.7845, -0.5398, 0.9658, -0.4091, -0.5717, -0.0021),
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
