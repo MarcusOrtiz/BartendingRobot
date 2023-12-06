@@ -1,4 +1,6 @@
 */build/
 */devel/
+.idea/*
+*.DS_Store
 __pycache__/
 catkin_ws/src/CMakeLists.txt
