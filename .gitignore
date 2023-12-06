@@ -1,2 +1,4 @@
 */build/
 */devel/
+__pycache__/
+catkin_ws/src/CMakeLists.txt
