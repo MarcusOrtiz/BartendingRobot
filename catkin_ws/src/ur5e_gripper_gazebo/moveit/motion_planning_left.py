@@ -296,12 +296,12 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(3.14159, -tau/4, tau/4, 0, 0, 0)
+        tutorial.go_to_joint_state(-3.14159, -tau/4, tau/4, 0, 0, 0)
 
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(3.24159, -tau/4, tau/4, 0, 0.9908, 0)
+        tutorial.go_to_joint_state(-3.24159, -tau/4, tau/4, 0, 0.9908, 0)
 
         
         input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
@@ -368,18 +368,18 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 0) 
+        tutorial.go_to_joint_state(-2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 0) 
 
         
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 2.0944) 
+        tutorial.go_to_joint_state(-2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 2.0944) 
 
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 0)
+        tutorial.go_to_joint_state(-2.968708305419426, -1.1016912351673032, 1.708198415385449, -0.554833237377963, 1.1989676922643264, 0)
 
         #  #for 45, 25
         # input(
@@ -391,7 +391,7 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(3.5049831635030326, -1.9034665279362724, 2.7113104246246014, -0.7903283035591855, 1.2540743561747494, 0.0021673398748349726) 
+        tutorial.go_to_joint_state(-3.5049831635030326, -1.9034665279362724, 2.7113104246246014, -0.7903283035591855, 1.2540743561747494, 0.0021673398748349726) 
 
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
