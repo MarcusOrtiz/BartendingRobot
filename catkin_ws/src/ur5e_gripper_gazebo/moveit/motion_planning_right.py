@@ -156,7 +156,7 @@ class UR5eMoveGroupPythonInterface(object):
             "near_bottle_loc": None,
             "at_bottle_loc": None,
             "lift": None,
-            "near_cup": (2.5, -1.6, 1.9, 0, 0, -0.3),
+            "near_cup": None,
             "pour": None
         }
 
@@ -191,7 +191,13 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states["lift"] = tuple(self.move_group.get_current_joint_values())
 
         # Position the bottle near the cup right before pouring
-        self.go_to_joint_state(*joint_states["near_cup"])
+        wpose = self.move_group.get_current_pose().pose
+        x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
+        cartesian_plan, _ = self.plan_cartesian_path(
+            x=cup_x - 0.1 - x0, y=cup_y - 0.1 - y0, z=-0.08
+        )
+        self.execute_plan(cartesian_plan)
+        joint_states["near_cup"] = tuple(self.move_group.get_current_joint_values())
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
         self.go_to_joint_state(j5=1.3708)
