@@ -203,13 +203,15 @@ class UR5eMoveGroupPythonInterface(object):
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
         cartesian_plan, _ = self.plan_cartesian_path(
-            x=cup_x - 0.1 - 0.045 - x0, y=cup_y - 0.1 + 0.045 - y0, z=-0.08
+            # x=cup_x - 0.1 - 0.045 - x0, y=cup_y - 0.1 + 0.045 - y0, z=-0.08
+            x=cup_x + 0.1 + 0.045 - x0, y=cup_y + 0.1 - 0.045 - y0, z=-0.16
         )
         self.execute_plan(cartesian_plan)
         joint_states["near_cup"] = tuple(self.move_group.get_current_joint_values())
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
         self.go_to_joint_state(j5=7 * tau / 16)
+        self.go_to_joint_state(j5=-7 * tau / 16)
         joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
         # Pause movement while pouring
