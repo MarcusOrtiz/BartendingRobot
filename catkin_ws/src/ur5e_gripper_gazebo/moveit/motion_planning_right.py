@@ -232,7 +232,7 @@ def main():
         if sim_or_phys in ["1", "2"]:
             bottle_x = float(input("Bottle x coordinate: "))
             bottle_y = float(input("Bottle y coordinate: "))
-            cup_x = -0.65
+            cup_x = 0.45
             cup_y = 0
             gripper = None
             umg = UR5eMoveGroupPythonInterface()
