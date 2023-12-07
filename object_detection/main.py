@@ -57,15 +57,17 @@ print(f'green: {g_bottle_pos}, blue: {b_bottle_pos}')
 right_command = ["python3", "../catkin_ws/src/ur5e_gripper_gazebo/moveit/motion_planning_right.py"]
 left_command = ["python3", "../catkin_ws/src/ur5e_gripper_gazebo/moveit/motion_planning_left.py"]
 
-if g_bottle_pos and g_bottle_pos > 0:
+if g_bottle_pos and g_bottle_pos < 0:
     right_command = right_command + ["2", f"{g_bottle_pos/100}", f"{row/100}"]
     subprocess.run(right_command)
-elif b_bottle_pos and b_bottle_pos > 0:
-    right_comamnd = right_command + ["2", f"{b_bottle_pos/100}", f"{row/100}"]
+elif b_bottle_pos is not None and b_bottle_pos < 0:
+    print("made it")
+    right_command = right_command + ["2", f"{b_bottle_pos/100}", f"{row/100}"]
+    
     subprocess.run(right_command)
-if g_bottle_pos and g_bottle_pos < 0:
+if g_bottle_pos and g_bottle_pos > 0:
     pass
-elif b_bottle_pos and b_bottle_pos < 0:
+elif b_bottle_pos and b_bottle_pos > 0:
     pass
 
 # right_command = ["python", "../catkin_ws/src/ur5e_gripper_gazebo/moveit/motion_planning_right.py"]
