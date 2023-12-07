@@ -301,7 +301,7 @@ def main():
 
         
         input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
-        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.3) 
+        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.505) 
 
 
         input("============ Press `Enter` to execute a saved path ...")
@@ -320,7 +320,7 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(0.38608914539012, -1.536518252192991, 1.818695914524728, -0.25412769104616384, 2.5344015241084747, 9.515101281998284e-05) 
+        tutorial.go_to_joint_state(0.38608914539012, -1.536518252192991, 1.818695914524728, -0.27412769104616384, 2.5344015241084747, 9.515101281998284e-05) 
 
 
         input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
@@ -347,10 +347,10 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
         )
-        tutorial.go_to_joint_state(0.7861798686274524, -1.536558542670405, 1.8186648552136884, -0.25545541491569423, 2.5343367301465953, -5.6470564124389e-05) 
+        tutorial.go_to_joint_state(0.785398, -tau/4, tau/4, 0, 2.5346, 0)
 
         input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
-        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.2) 
+        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.505) 
 
 
         input("============ Press `Enter` to execute a saved path ...")
