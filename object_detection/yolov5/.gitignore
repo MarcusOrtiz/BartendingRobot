@@ -18,10 +18,10 @@
 *.MOV
 *.avi
 *.data
-*.json
-*.cfg
-!setup.cfg
-!cfg/yolov3*.cfg
+#*.json
+#*.cfg
+#!setup.cfg
+#!cfg/yolov3*.cfg
 
 storage.googleapis.com
 runs/*
@@ -49,7 +49,7 @@ VOC/
 
 # Neural Network weights -----------------------------------------------------------------------------------------------
 *.weights
-*.pt
+#*.pt
 *.pb
 *.onnx
 *.engine
