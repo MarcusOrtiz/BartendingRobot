@@ -160,28 +160,29 @@ class UR5eMoveGroupPythonInterface(object):
             "pour": None,
         }
 
-        # # Start state
-        # self.go_to_joint_state(*joint_states["start"])
+        # Start state
+        self.go_to_joint_state(*joint_states["start"])
 
-        # # Move to the right of the platform. These joint values are set so that the EE is oriented 45 deg in the world frame
-        # self.go_to_joint_state(*joint_states["init_right"])
+        # Move to the right of the platform. These joint values are set so that the EE is oriented 45 deg in the world frame
+        self.go_to_joint_state(*joint_states["init_right"])
 
         # Get EE to lower than the bottle mouth
         self.go_to_joint_state(*joint_states["low"])
 
-        bottle_y, bottle_x = -bottle_x, bottle_y
+        bottle_y, bottle_x = bottle_x, bottle_y
 
         # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
         print(bottle_x, bottle_y)
         cartesian_plan, _ = self.plan_cartesian_path(
-            x=bottle_x - 0.25 - x0, y=bottle_y - 0.25 - y0
+            x=bottle_x - 0.25 - x0, y=bottle_y - 0.25 - y0, z=0.03
         )
         self.execute_plan(cartesian_plan)
         joint_states["near_bottle_loc"] = tuple(
             self.move_group.get_current_joint_values()
         )
+        print("near bottle loc pos", joint_states["near_bottle_loc"])
 
         # Move the EE to the bottle diagonally
         cartesian_plan, _ = self.plan_cartesian_path(x=0.11, y=0.11)
@@ -204,13 +205,12 @@ class UR5eMoveGroupPythonInterface(object):
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
         cartesian_plan, _ = self.plan_cartesian_path(
             # x=cup_x - 0.1 - 0.045 - x0, y=cup_y - 0.1 + 0.045 - y0, z=-0.08
-            x=cup_x + 0.1 + 0.045 - x0, y=cup_y + 0.1 - 0.045 - y0, z=-0.16
+            x=cup_x + 0.1 + 0.045 - x0 - 0.212, y=cup_y + 0.1 - 0.045 - y0 - 0.212, z=-0.16
         )
         self.execute_plan(cartesian_plan)
         joint_states["near_cup"] = tuple(self.move_group.get_current_joint_values())
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-        self.go_to_joint_state(j5=7 * tau / 16)
         self.go_to_joint_state(j5=-7 * tau / 16)
         joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
