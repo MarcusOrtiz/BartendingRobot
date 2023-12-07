@@ -230,27 +230,27 @@ class UR5eMoveGroupPythonInterface(object):
 
 def main():
     try:
-        sim_or_phys = input(
-            "Are you running a simulation or physical system? \n"
-            "[1] Simulation  [2] Physical : "
-        )
-
-        if sim_or_phys in ["1", "2"]:
+        sim_or_phys, bottle_x, bottle_y = None, None, None
+        if len(sys.argv) == 4:
+            sim_or_phys, bottle_x, bottle_y = sys.argv[1:4]
+        else:
+            sim_or_phys = input(
+                "Are you running a simulation or physical system? \n"
+                "[1] Simulation  [2] Physical : "
+            )
             bottle_x = float(input("Bottle x coordinate: "))
             bottle_y = float(input("Bottle y coordinate: "))
-            cup_x = 0.45
-            cup_y = 0
-            gripper = None
-            umg = UR5eMoveGroupPythonInterface()
+        cup_x = 0.45
+        cup_y = 0
+        gripper = None
+        umg = UR5eMoveGroupPythonInterface()
 
-            if sim_or_phys == "2":  # physical
-                gripper = Gripper()
-                gripper.gripper_init()
+        if sim_or_phys == "2":  # physical
+            gripper = Gripper()
+            gripper.gripper_init()
 
-            umg.pick_and_pour_right(bottle_x, bottle_y, cup_x, cup_y, gripper)
-            umg.pick_and_pour_left()
-        else:
-            print("Error: Choose [1] Simulation or [2] Physical. Exiting program.")
+        umg.pick_and_pour_right(bottle_x, bottle_y, cup_x, cup_y, gripper)
+        umg.pick_and_pour_left()
     except rospy.ROSInterruptException:
         return
     except KeyboardInterrupt:
