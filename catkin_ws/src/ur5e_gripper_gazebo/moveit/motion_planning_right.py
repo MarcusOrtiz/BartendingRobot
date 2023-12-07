@@ -157,7 +157,7 @@ class UR5eMoveGroupPythonInterface(object):
             "at_bottle_loc": None,
             "lift": None,
             "near_cup": None,
-            "pour": None
+            "pour": None,
         }
 
         # Start state
@@ -172,14 +172,20 @@ class UR5eMoveGroupPythonInterface(object):
         # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
-        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x - 0.25 - x0, y=bottle_y - 0.25 - y0)
+        cartesian_plan, _ = self.plan_cartesian_path(
+            x=bottle_x - 0.25 - x0, y=bottle_y - 0.25 - y0
+        )
         self.execute_plan(cartesian_plan)
-        joint_states["near_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
+        joint_states["near_bottle_loc"] = tuple(
+            self.move_group.get_current_joint_values()
+        )
 
         # Move the EE to the bottle diagonally
         cartesian_plan, _ = self.plan_cartesian_path(x=0.13, y=0.13)
         self.execute_plan(cartesian_plan)
-        joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
+        joint_states["at_bottle_loc"] = tuple(
+            self.move_group.get_current_joint_values()
+        )
 
         # Grab bottle
         if gripper is not None:
@@ -200,7 +206,7 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states["near_cup"] = tuple(self.move_group.get_current_joint_values())
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-        self.go_to_joint_state(j5=7 * tau/16)
+        self.go_to_joint_state(j5=7 * tau / 16)
         joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
         # Pause movement while pouring
