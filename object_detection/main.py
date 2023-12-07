@@ -61,7 +61,6 @@ if g_bottle_pos and g_bottle_pos < 0:
     right_command = right_command + ["2", f"{g_bottle_pos/100}", f"{row/100}"]
     subprocess.run(right_command)
 elif b_bottle_pos is not None and b_bottle_pos < 0:
-    print("made it")
     right_command = right_command + ["2", f"{b_bottle_pos/100}", f"{row/100}"]
     
     subprocess.run(right_command)
