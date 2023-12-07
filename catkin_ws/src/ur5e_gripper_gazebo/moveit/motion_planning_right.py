@@ -166,7 +166,7 @@ class UR5eMoveGroupPythonInterface(object):
         # Move to the right of the platform. These joint values are set so that the EE is oriented 45 deg in the world frame
         self.go_to_joint_state(*joint_states["init_right"])
 
-        # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
+        # Get EE to lower than the bottle mouth
         self.go_to_joint_state(*joint_states["low"])
 
         # Get EE ready to grab bottle from diagonal
