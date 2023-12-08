@@ -13,13 +13,13 @@
         <link name="${prefix}measurement_tool">
             <visual>
                 <geometry>
-                    <!-- The path to the visual meshes in the package. -->
+                    <!-- The path to the visual meshes in the package and scale. -->
                     <mesh filename="package://bartending_robot/meshes/visual/gripper.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
             </visual>
             <collision>
                 <geometry>
-                    <!-- The path to the collision meshes in the package. -->
+                    <!-- The path to the collision meshes in the package and scale. -->
                     <mesh filename="package://bartending_robot/meshes/collision/gripper.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
             </collision>

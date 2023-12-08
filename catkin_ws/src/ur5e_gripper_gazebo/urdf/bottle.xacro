@@ -1,29 +1,35 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-    <xacro:macro name="bottle" params="color">
-
+    <!-- Here we define the 2 parameters of the macro -->
+    <xacro:macro name="bottle" params="color"> 
         <link name="${color}_bottle">
             <visual>
-                <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <!-- setting visual position and orientation of the bottle -->
+                <origin xyz="0 0 0" rpy="1.57 0 0"/> 
                 <geometry>
-                    <mesh filename="package://bartending_robot/meshes/visual/bottle.stl" scale="0.001 0.001 0.001">
+                    <!-- The path to the visual meshes in the package and scale. -->
+                    <mesh filename="package://bartending_robot/meshes/visual/bottle.stl" scale="0.001 0.001 0.001"> 
                     </mesh>
                 </geometry>
             </visual>
             <collision>
-                <origin xyz="0 0 0" rpy="1.57 0 0"/>
+                <!-- setting collision position and orientation of the bottle -->
+                <origin xyz="0 0 0" rpy="1.57 0 0"/> 
                 <geometry>
-                    <mesh filename="package://bartending_robot/meshes/visual/bottle.stl" scale="0.001 0.001 0.001"/>
+                    <!-- The path to the collision meshes in the package and scale. -->
+                    <mesh filename="package://bartending_robot/meshes/visual/bottle.stl" scale="0.001 0.001 0.001"/> 
                 </geometry>
             </collision>
             <inertial>
+                <!-- setting inertial properties of the bottle-->
                 <mass value="1e-5"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
             </inertial>
         </link>
         <gazebo reference="${color}_bottle">
-            <material>Gazebo/${color}</material>
+            <!-- setting material to the correct color-->
+            <material>Gazebo/${color}</material> 
         </gazebo>
     </xacro:macro>
 </robot>

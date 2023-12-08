@@ -4,28 +4,34 @@
 
         <link name="cup">
             <visual>
-                <origin xyz="0 0 0" rpy="-1.57 0 0"/>
+                <!-- setting visual position and orientation of the cup -->
+                <origin xyz="0 0 0" rpy="-1.57 0 0"/> 
                 <geometry>
+                    <!-- The path to the visual meshes in the package and scale. -->
                     <mesh filename="package://bartending_robot/meshes/visual/cup.stl" scale="0.001 0.001 0.001">
                     </mesh>
                 </geometry>
             </visual>
 
             <collision>
-                <origin xyz="0 0 0" rpy="-1.57 0 0"/>
+                <!-- setting visual position and orientation of the cup -->
+                <origin xyz="0 0 0" rpy="-1.57 0 0"/> 
                 <geometry>
-                    <mesh filename="package://bartending_robot/meshes/visual/cup.stl" scale="0.001 0.001 0.001"/>
+                    <!-- The path to the collision meshes in the package and scale. -->
+                    <mesh filename="package://bartending_robot/meshes/visual/cup.stl" scale="0.001 0.001 0.001"/> #scaling the CAD model
                 </geometry>
             </collision>
 
-            <inertial>
+            <inertial> 
+                <!-- setting inertial settings of the cup -->
                 <mass value="1e-5"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
             </inertial>
         </link>
         <gazebo reference="cup">
-            <material>Gazebo/Orange</material>
+            <!-- setting material color of the cup -->
+            <material>Gazebo/Orange</material> 
         </gazebo>
 
     </xacro:macro>

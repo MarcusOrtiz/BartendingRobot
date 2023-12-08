@@ -3,15 +3,19 @@
     <xacro:macro name="platform">
         <link name="platform">
             <visual>
+                <!-- setting visual position and orientation of the platform -->
                 <origin xyz="0 0 0" rpy="0 3.14 0"/>
                 <geometry>
+                    <!-- The path to the visual meshes in the package and scale. -->
                     <mesh filename="package://bartending_robot/meshes/visual/platform.stl" scale="0.001 0.001 0.001">
                     </mesh>
                 </geometry>
             </visual>
             <collision>
+                <!-- setting collision position and orientation of the bottle -->
                 <origin xyz="0 0 0" rpy="0 3.14 0"/>
                 <geometry>
+                    <!-- The path to the collision meshes in the package and scale. -->
                     <mesh filename="package://bartending_robot/meshes/collision/platform.stl" scale="0.001 0.001 0.001">
                     </mesh>
                 </geometry>
@@ -19,12 +23,14 @@
 
 
             <inertial>
+                <!-- setting inertial properties of the platform-->
                 <mass value="1000"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <inertia ixx="500" ixy="0" ixz="0" iyy="500" iyz="0" izz="500"/>
             </inertial>
         </link>
         <gazebo reference="platform">
+            <!-- setting material color of the platform-->
             <material>Gazebo/Black</material>
         </gazebo>
 
