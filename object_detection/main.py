@@ -1,7 +1,7 @@
 import subprocess
 import pixelConverter as pc
 
-camera_command = ["python3", "rs_camera.py"]
+camera_command = ["python3", "camera.py", "rs"]
 subprocess.run(camera_command)
 
 detection_command = ['python3', 'yolov5/detect.py', "--weights",
