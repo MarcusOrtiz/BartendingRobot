@@ -196,7 +196,6 @@ def run(
                         line = (label, *xywh, conf) if save_conf else (label, *xywh)  # label format
                         # Convert all elements to string, formatting floats to 4 decimal places
                         line_str = [f'{item}' if isinstance(item, float) else str(item) for item in line]
-
                         # Join elements with a tab and write to file
                         with open(f'{txt_path}.txt', 'a') as f:
                             f.write('\t'.join(line_str) + '\n')
