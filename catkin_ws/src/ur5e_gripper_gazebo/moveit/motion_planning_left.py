@@ -294,8 +294,13 @@ def main():
         
 
         
+<<<<<<< HEAD
         input("============ Press `Enter` to move down in order to grasp the bottle ...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.3) 
+=======
+        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.505) 
+>>>>>>> 9023918802cc3a58531390c0381276fac196ee5f
 
 
         input("============ Press `Enter` to execute the saved path and also to get the current joint values...")
@@ -314,7 +319,7 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to a position adjacent to the cup..."
         )
-        tutorial.go_to_joint_state(0.38608914539012, -1.536518252192991, 1.818695914524728, -0.25412769104616384, 2.5344015241084747, 9.515101281998284e-05) 
+        tutorial.go_to_joint_state(0.38608914539012, -1.536518252192991, 1.818695914524728, -0.27412769104616384, 2.5344015241084747, 9.515101281998284e-05) 
 
 
         input("============ Press `Enter` to move down to be closer to the edge of the cup...")
@@ -341,10 +346,17 @@ def main():
         input(
             "============ Press `Enter` to use joint state goal to go to the bottle's original position..."
         )
+<<<<<<< HEAD
         tutorial.go_to_joint_state(0.785398, -tau/4, tau/4, 0, 2.5346, 0) 
 
         input("============ Press `Enter` to move down in order to set the bottle down...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.2) 
+=======
+        tutorial.go_to_joint_state(0.785398, -tau/4, tau/4, 0, 2.5346, 0)
+
+        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.505) 
+>>>>>>> 9023918802cc3a58531390c0381276fac196ee5f
 
 
         input("============ Press `Enter` to execute a saved path ...")

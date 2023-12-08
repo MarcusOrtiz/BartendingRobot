@@ -180,6 +180,7 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Write results
+                print(f'Removing path: {txt_path}.txt')
                 os.remove(f'{txt_path}.txt') if os.path.exists(f'{txt_path}.txt') else None  # remove existing file
 
                 for *xyxy, conf, cls in reversed(det):
@@ -196,7 +197,7 @@ def run(
                         line = (label, *xywh, conf) if save_conf else (label, *xywh)  # label format
                         # Convert all elements to string, formatting floats to 4 decimal places
                         line_str = [f'{item}' if isinstance(item, float) else str(item) for item in line]
-
+                        print('Writing file to text path')
                         # Join elements with a tab and write to file
                         with open(f'{txt_path}.txt', 'a') as f:
                             f.write('\t'.join(line_str) + '\n')
