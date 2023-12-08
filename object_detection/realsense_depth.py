@@ -1,6 +1,12 @@
 import pyrealsense2 as rs
 import numpy as np
 
+'''
+Code from PySource tutorial on Distance Detection with Intel Realsense d435i
+URL: https://pysource.com/2021/03/11/distance-detection-with-depth-camera-intel-realsense-d435i/
+Author: PySource
+'''
+
 class DepthCamera:
     def __init__(self):
         # Configure depth and color streams
@@ -15,8 +21,6 @@ class DepthCamera:
 
         config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
         config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
-
-
 
         # Start streaming
         self.pipeline.start(config)
