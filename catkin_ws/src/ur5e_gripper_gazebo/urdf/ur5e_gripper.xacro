@@ -51,7 +51,7 @@
     <joint name="world_joint" type="fixed">
         <parent link="world"/>
         <child link="base_link"/>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
     </joint>
 
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/bottle.xacro"/>
@@ -59,12 +59,12 @@
     <xacro:bottle color="Green"/>
 
     <joint name="Blue_bottle_joint" type="fixed">
-        <origin xyz=".35 0.45 0.044" rpy="0 0 0"/>
+        <origin xyz=".45 -0.35 0.044" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="Blue_bottle"/>
     </joint>
     <joint name="Green_bottle_joint" type="fixed">
-        <origin xyz="-.35 0.45 0.044" rpy="0 0 0"/>
+        <origin xyz=".45 0.35 0.044" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="Green_bottle"/>
     </joint>
@@ -73,7 +73,7 @@
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/cup.xacro"/>
     <xacro:cup/>
     <joint name="cup_joint" type="fixed">
-        <origin xyz="-0 .65 .045" rpy="0 0 0"/>
+        <origin xyz="0.45 0 .044" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="cup"/>
     </joint>
@@ -81,7 +81,7 @@
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/platform.xacro"/>
     <xacro:platform/>
     <joint name="platform_joint" type="fixed">
-        <origin xyz="0 .4 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <parent link="world"/>
         <child link="platform"/>
     </joint>

@@ -149,34 +149,71 @@ class UR5eMoveGroupPythonInterface(object):
         self.move_group.execute(plan, wait=True)
 
     def pick_and_pour_right(self, bottle_x, bottle_y, cup_x, cup_y, gripper):
+        """
+        Make UR5e pick up bottle and pour contents into a cup. Only works when
+        the bottle is to the right of the arm. To do the same for a bottle to
+        the left of the arm, see motion_planning_left.py.
+
+        The arm will go through each of these states in order to pour the
+        bottle contents into the cup, then do the reverse to return the bottle
+        to its original location:
+        1) start: The arm will always start here. This state is hard-coded to
+           reflect a safe state we identified using the physical arm.
+        2) init_right: Move the end-effector to the right of the table.
+           Hard-coded to reflect a safe state we identified using the physical
+           arm.
+        3) low: Move the end-effector lower and closer to the table. Hard-coded
+           to reflect a safe state we identified using the physical arm.
+        4) near_bottle_loc: Move the end-effector very close to the bottle, so
+           that the gripper can close in on it in the next move.
+        5) at_bottle_loc: Move the end-effector so that the gripper fingers are
+           around the bottle.
+        6) lift: Lift the bottle, just using a purely vertical path.
+        7) near_cup: Place the bottle near the cup, to prepare to pour.
+        8) pour: Tilt the bottle.
+        """
         joint_states = {
-            "start": (tau / 4, -tau / 4, tau / 4, 0, 0, 0),
-            "init_right": None,
-            "low": (-0.5735, -1.2376, 2.3043, -1.0618, -0.5733, 0.0037),
+            "start": (0, -tau / 4, tau / 4, 0, 0, 0),
+            "init_right": (-tau / 4, -tau / 8, tau / 8, 0, -tau / 8, 0),
+            "low": (-tau / 4, -0.4, 0.98, 0.4 - 0.98, -tau / 8, 0),
+            "near_bottle_loc": None,
             "at_bottle_loc": None,
             "lift": None,
-            "near_cup": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, 0),
-            "pour": (pi / 4 + 0.2, -1.5, 1.8, 0, 0, pi / 2 - 0.2)
+            "near_cup": None,
+            "pour": None,
         }
 
         # Start state
         self.go_to_joint_state(*joint_states["start"])
 
-        # Move right
-        self.go_to_joint_state(j0=-pi / 12)
-        joint_states["init_right"] = tuple(self.move_group.get_current_joint_values())
+        # Move to the right of the platform. These joint values are set so that
+        # the EE is oriented 45 deg in the world frame
+        self.go_to_joint_state(*joint_states["init_right"])
 
-        # Get EE to lower than the bottle mouth. The resulting z should be ~0.12
+        # Get EE to lower than the bottle mouth
         self.go_to_joint_state(*joint_states["low"])
 
-        # Move the EE to the bottle: Align x first, then y. Don't align simultaneously to avoid collision
+        bottle_y, bottle_x = bottle_x, bottle_y
+
+        # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
-        cartesian_plan, _ = self.plan_cartesian_path(x=bottle_x - x0)
+        print(bottle_x, bottle_y)
+        cartesian_plan, _ = self.plan_cartesian_path(
+            x=bottle_x - 0.25 - x0, y=bottle_y - 0.25 - y0, z=0.03
+        )
         self.execute_plan(cartesian_plan)
-        cartesian_plan, _ = self.plan_cartesian_path(y=bottle_y - y0 - 0.18)  # 0.18 is a necessary offset
+        joint_states["near_bottle_loc"] = tuple(
+            self.move_group.get_current_joint_values()
+        )
+        print("near bottle loc pos", joint_states["near_bottle_loc"])
+
+        # Move the EE to the bottle diagonally
+        cartesian_plan, _ = self.plan_cartesian_path(x=0.11, y=0.11)
         self.execute_plan(cartesian_plan)
-        joint_states["at_bottle_loc"] = tuple(self.move_group.get_current_joint_values())
+        joint_states["at_bottle_loc"] = tuple(
+            self.move_group.get_current_joint_values()
+        )
 
         # Grab bottle
         if gripper is not None:
@@ -188,10 +225,17 @@ class UR5eMoveGroupPythonInterface(object):
         joint_states["lift"] = tuple(self.move_group.get_current_joint_values())
 
         # Position the bottle near the cup right before pouring
-        self.go_to_joint_state(*joint_states["near_cup"])
+        wpose = self.move_group.get_current_pose().pose
+        x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
+        cartesian_plan, _ = self.plan_cartesian_path(
+            x=cup_x - x0 - 0.067, y=cup_y - y0 - 0.067, z=-0.16
+        )
+        self.execute_plan(cartesian_plan)
+        joint_states["near_cup"] = tuple(self.move_group.get_current_joint_values())
 
         # Tilt the bottle so that bottle mouth is tilted downward toward the cup
-        self.go_to_joint_state(*joint_states["pour"])
+        self.go_to_joint_state(j5=-7 * tau / 16)
+        joint_states["pour"] = tuple(self.move_group.get_current_joint_values())
 
         # Pause movement while pouring
         time.sleep(3)
@@ -205,36 +249,48 @@ class UR5eMoveGroupPythonInterface(object):
             gripper.OpenGripper()
 
         # Return UR5e to start state
-        for state_name in ["low", "init_right", "start"]:
+        for state_name in ["near_bottle_loc", "low", "init_right", "start"]:
             self.go_to_joint_state(*joint_states[state_name])
-
-    def pick_and_pour_left(self):
-        joint_states = []
 
 
 def main():
+    """Take in bottle coordinates from manual input or input from YOLO
+    (computer vision).
+
+    Run pick-and-pour from the right side of the arm.
+    """
     try:
-        sim_or_phys = input(
-            "Are you running a simulation or physical system? \n"
-            "[1] Simulation  [2] Physical : "
-        )
-
-        if sim_or_phys in ["1", "2"]:
-            bottle_x = float(input("Bottle x coordinate: "))  # Default for testing: 0.35
-            bottle_y = float(input("Bottle y coordinate: "))  # Default for testing: 0.45
-            cup_x = 0
-            cup_y = 0.65
-            gripper = None
-            umg = UR5eMoveGroupPythonInterface()
-
-            if sim_or_phys == "2":  # physical
-                gripper = Gripper()
-                gripper.gripper_init()
-
-            umg.pick_and_pour_right(bottle_x, bottle_y, cup_x, cup_y, gripper)
-            umg.pick_and_pour_left()
+        sim_or_phys, bottle_x, bottle_y = None, None, None
+        print(sys.argv)
+        print(len(sys.argv))
+        if len(sys.argv) > 1:
+            sim_or_phys, bottle_x, bottle_y = sys.argv[1:4]
+            sim_or_phys = str(sim_or_phys)
+            bottle_x = float(bottle_x)
+            bottle_y = float(bottle_y)
         else:
-            print("Error: Choose [1] Simulation or [2] Physical. Exiting program.")
+            sim_or_phys = input(
+                "Are you running a simulation or physical system? \n"
+                "[1] Simulation  [2] Physical : "
+            )
+            bottle_x = float(input("Bottle x coordinate: "))
+            bottle_y = float(input("Bottle y coordinate: "))
+
+        # We only allow bottle coordinates within a range where YOLO can accurately identify them
+        assert abs(bottle_x) < 0.5, 0 < bottle_y < 1
+
+        # Fixed cup location
+        cup_x = 0.45
+        cup_y = 0
+        gripper = None
+        umg = UR5eMoveGroupPythonInterface()
+
+        if sim_or_phys == "2":  # physical
+            gripper = Gripper()
+            gripper.gripper_init()
+
+        umg.pick_and_pour_right(bottle_x, bottle_y, cup_x, cup_y, gripper)
+
     except rospy.ROSInterruptException:
         return
     except KeyboardInterrupt:
