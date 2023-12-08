@@ -33,6 +33,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 # Author: Acorn Pooley, Mike Lautman
+# This code is adapted from the tutorial posted on the Ed Discussion
 
 ## BEGIN_SUB_TUTORIAL imports
 ##
@@ -44,10 +45,7 @@
 # Python 2/3 compatibility imports
 from __future__ import print_function
 from six.moves import input
-# from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachModelResponse
-# from gazebo_msgs.srv import SpawnModel, SpawnModelRequest, SpawnModelResponse
-# from copy import deepcopy
-# from tf.transformations import quaternion_from_euler
+
 
 
 import sys
@@ -220,10 +218,6 @@ class jasmineinitial(object):
         move_group.stop()
         print('Movement Done')
 
-        # rospy.loginfo("Attaching greenbottle and hand")
-        # amsg = Attach()
-        # amsg.model_name_1 = "Green_bottle"
-        # amsg.link_name_1 = "wrist_3_link"
 
      #use cartesian points to actually move the robot in directions to trace letters
     def plan_cartesian_path(self, wx, wy, wz, scale=1):
@@ -279,51 +273,51 @@ def main():
     try:
         print("")
         print("----------------------------------------------------------")
-        print("Welcome to the MoveIt MoveGroup Python Interface Tutorial")
+        print("Welcome to the Motion Planning to Reach the Left Bottle")
         print("----------------------------------------------------------")
         print("Press Ctrl-D to exit at any time")
         print("")
         input(
-            "============ Press `Enter` to begin the tutorial by setting up the moveit_commander ..."
+            "============ Press `Enter` to begin ..."
         )
         tutorial = jasmineinitial()
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to use joint state goal to go to starting position..."
         )
         tutorial.go_to_joint_state(0, -tau/4, tau/4, 0, 0, 0)
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to use joint state goal to position the end effector above the cup..."
         )
         tutorial.go_to_joint_state(0.785398, -tau/4, tau/4, 0, 2.5346, 0)
         
 
         
-        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        input("============ Press `Enter` to move down in order to grasp the bottle ...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.3) 
 
 
-        input("============ Press `Enter` to execute a saved path ...")
+        input("============ Press `Enter` to execute the saved path and also to get the current joint values...")
         tutorial.execute_plan(cartesian_plan)
         print(tutorial.move_group.get_current_joint_values())
 
-        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        input("============ Press `Enter` to raise the cup up...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, 0.2) 
 
 
-        input("============ Press `Enter` to execute a saved path ...")
+        input("============ Press `Enter` to execute a saved path and also to get the current joint values...")
         tutorial.execute_plan(cartesian_plan)
         print(tutorial.move_group.get_current_joint_values())
 
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to use joint state goal to go to a position adjacent to the cup..."
         )
         tutorial.go_to_joint_state(0.38608914539012, -1.536518252192991, 1.818695914524728, -0.25412769104616384, 2.5344015241084747, 9.515101281998284e-05) 
 
 
-        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        input("============ Press `Enter` to move down to be closer to the edge of the cup...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.2) 
 
 
@@ -333,23 +327,23 @@ def main():
 
         
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to rotate the wrist 135 degrees in order to pour the M&Ms..."
         )
         tutorial.go_to_joint_state(0.3866538305475169, -1.2583514477007052, 2.1079269923743045, -0.804250570600197, 2.534104647576573, 2.35619) 
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to return the wrist joint to 0 degrees..."
         )
         tutorial.go_to_joint_state(0.3866538305475169, -1.2583514477007052, 2.1079269923743045, -0.804250570600197, 2.534104647576573, 0)
 
        
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to use joint state goal to go to the bottle's original position..."
         )
-        tutorial.go_to_joint_state(0.7861798686274524, -1.536558542670405, 1.8186648552136884, -0.25545541491569423, 2.5343367301465953, -5.6470564124389e-05) 
+        tutorial.go_to_joint_state(0.785398, -tau/4, tau/4, 0, 2.5346, 0) 
 
-        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        input("============ Press `Enter` to move down in order to set the bottle down...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, -0.2) 
 
 
@@ -357,7 +351,7 @@ def main():
         tutorial.execute_plan(cartesian_plan)
         print(tutorial.move_group.get_current_joint_values())
 
-        input("============ Press `Enter` to plan and display a Cartesian path to draw the final line of k...")
+        input("============ Press `Enter` to move up and out of the bottle's way...")
         cartesian_plan, fraction = tutorial.plan_cartesian_path(0, 0, 0.35) 
 
 
@@ -366,7 +360,7 @@ def main():
         print(tutorial.move_group.get_current_joint_values())
 
         input(
-            "============ Press `Enter` to use joint state goal to go to starting position for first letter..."
+            "============ Press `Enter` to return to the starting position..."
         )
         tutorial.go_to_joint_state(0, -tau/4, tau/4, 0, 0, 0)
 
