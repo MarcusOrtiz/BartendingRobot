@@ -1,3 +1,6 @@
+<!-- This code is adapted from the tutorial at https://gramaziokohler.github.io/compas_
+fab/0.21.0/examples/03_backends_ros/07_ros_create_urdf_ur5_with_measurement_tool
+.html#3-7-5-add-path-to-search-paths  about adding a custom end effector to a UR5 robot-->
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="https://ros.org/wiki/xacro">
     <!-- Here we define the 2 parameters of the macro -->
@@ -35,3 +38,5 @@
 
     </xacro:macro>
 </robot>
+
+
