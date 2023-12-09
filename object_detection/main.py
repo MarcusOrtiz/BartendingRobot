@@ -1,3 +1,14 @@
+"""
+This script runs the pipeline for object detection and motion planning
+1. Captures an image from either the default or realsense camera
+2. Detects and saves bounding boxes of cup, green bottle, and blue bottle in captured image
+3. Predicts the real distance between the cup and the green bottle and the blue bottle
+4. Calls right or/and left motion planning scripts to move the robot to the correct position
+Usage:
+    python3 main.py
+"""
+
+
 import subprocess
 import pixel_converter as pc
 
@@ -14,21 +25,21 @@ ENVIRONMENT = "2"  # 1 for sim, 2 for real
 
 
 def capture(camera_type):
-    '''
+    """
     Runs python script to capture image from rs or default camera
 
     Parameters:
         camera_type (str): 'rs' for realsense camera, anything else for default camera
-    '''
+    """
     camera_command = ["python3", "camera.py", camera_type]
     subprocess.run(camera_command)
 
 
 def detect():
-    '''
+    """
     Runs python script to detect and save bounding boxes of cup, green bottle, and blue bottle in captured image
     Uses Yolov5 model, trained on simulated and real images of the cup, green bottle, and blue bottle
-    '''
+    """
     detection_command = ['python3', 'yolov5/detect.py', "--weights",
                          WEIGHTS,
                          "--imgsz", IMG_WIDTH, IMG_HEIGHT, "--conf", CONF,
@@ -37,15 +48,16 @@ def detect():
 
 
 def predict():
-    '''
+    """
     Runs python script to predict the distance between the cup and the green bottle and the blue bottle
-    '''
+    """
     bottle_dims = {}
 
     # Open and read file with bounding box dimensions
     with open(PRED_PATH, 'r') as file:
         for line in file:
             parts = line.strip().split()
+            # Check if line length is valid
             if len(parts) >= 5:
                 obj = parts[0]
                 dimensions = tuple(parts[1:5])
@@ -70,20 +82,29 @@ def predict():
 
 
 def move(row, g_bottle_pos, b_bottle_pos):
-    '''
-    Using positions of bottles, selects whether to using right or left motion planning with
-    '''
+    """
+    Using positions of bottles, calls right or/and left motion planning scripts
+
+    Parameters:
+        row (int): 45 or 60, the distance of the objects from the base of robot
+        g_bottle_pos (float): position of green bottle relative to cup
+        b_bottle_pos (float): position of blue bottle relative to cup
+    """
     right_command = ["python3", MOTION_LEFT]
     left_command = ["python3", MOTION_RIGHT]
 
+    # Green bottle is on the right
     if g_bottle_pos and g_bottle_pos < 0:
         right_command = right_command + ["2", f"{g_bottle_pos / 100}", f"{row / 100}"]
         subprocess.run(right_command)
+    # Blue bottle is on the right
     elif b_bottle_pos is not None and b_bottle_pos < 0:
         right_command = right_command + ["2", f"{b_bottle_pos / 100}", f"{row / 100}"]
         subprocess.run(right_command)
+    # Green bottle is on the left
     if g_bottle_pos and g_bottle_pos > 0:
         pass
+    # Blue bottle is on the left
     elif b_bottle_pos and b_bottle_pos > 0:
         pass
 

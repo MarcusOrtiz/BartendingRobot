@@ -1,8 +1,10 @@
 """
+This script captures an image from  either the default or realsense camera
 
+Usage:
+    python3 camera.py <camera_type>
+    camera_type: 'rs' for realsense camera, anything else for default camera
 """
-
-
 import os
 import sys
 import time
@@ -51,8 +53,7 @@ def write_image(ret, frame):
 
 
 if __name__ == 'main':
-    # If rs use depth camera, else default
-    if sys.argv[1] == 'rs':
+    if sys.argv[1] == 'rs':  # user specifies realsense camera
         capture_rs_image()
     else:
         capture_image()
