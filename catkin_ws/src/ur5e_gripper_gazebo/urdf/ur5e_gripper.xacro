@@ -7,30 +7,21 @@
     <xacro:arg name="physical_params" default=""/>
     <xacro:arg name="kinematics_params" default=""/>
     <xacro:arg name="visual_params" default=""/>
-    <!--
-      legal values:
-        - hardware_interface/PositionJointInterface
-        - hardware_interface/VelocityJointInterface
-        - hardware_interface/EffortJointInterface
 
-      NOTE: this value must correspond to the controller configured in the
-            controller .yaml files in the 'config' directory.
-    -->
+    <!-- Safety limits and transmission interface from args -->
     <xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface"/>
     <xacro:arg name="safety_limits" default="false"/>
     <xacro:arg name="safety_pos_margin" default="0.15"/>
     <xacro:arg name="safet_k_position" default="20"/>
 
 
-    <!-- This will call ur.xacro and the gripper -->
-    <!-- ur5e -->
+    <!-- Calls UR from provided UR code -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/ur_macro.xacro"/>
 
-    <!-- end-effector -->
+    <!-- Calls Gripper -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/gripper.xacro"/>
 
-    <!-- ur5e loading -->
-    <!-- The ur5 xacro must be included with passing parameters -->
+    <!-- Includes the urdf for robot -->
     <xacro:ur_robot_gazebo
             prefix=""
             joint_limits_parameters_file="$(arg joint_limit_params)"
@@ -42,8 +33,8 @@
             safety_pos_margin="$(arg safety_pos_margin)"
             safety_k_position="$(arg safety_k_position)"
     />
-    <!-- end-effector -->
-    <!-- Here we include the end-effector by setting the parameters -->
+
+    <!-- includes urdf for gripper and connects to ur -->
     <xacro:gripper prefix="" connected_to="tool0"/>
 
     <!-- define the ur5's position and orientation in the world coordinate system -->
@@ -54,10 +45,12 @@
         <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
     </joint>
 
+    <!-- calls and inclues blue and green urdfs -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/bottle.xacro"/>
     <xacro:bottle color="Blue"/>
     <xacro:bottle color="Green"/>
 
+    <!-- define each bottle's position and orientation in the world coordinate system -->
     <joint name="Blue_bottle_joint" type="fixed">
         <origin xyz=".45 -0.35 0.044" rpy="0 0 0"/>
         <parent link="world"/>
@@ -69,7 +62,7 @@
         <child link="Green_bottle"/>
     </joint>
 
-
+    <!-- calls and includes cup urdf -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/cup.xacro"/>
     <xacro:cup/>
     <joint name="cup_joint" type="fixed">
@@ -78,6 +71,7 @@
         <child link="cup"/>
     </joint>
 
+    <!-- calls and includes platform urdf -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/platform.xacro"/>
     <xacro:platform/>
     <joint name="platform_joint" type="fixed">
@@ -86,6 +80,7 @@
         <child link="platform"/>
     </joint>
 
+    <!-- calls and includes camera urdf -->
     <xacro:include filename="$(find ur5e_gripper_gazebo)/urdf/camera.xacro"/>
     <xacro:camera/>
     <joint name="camera_joint" type="fixed">
