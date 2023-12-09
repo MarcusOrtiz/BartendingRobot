@@ -55,5 +55,5 @@ def write_image(ret, frame):
 if __name__ == 'main':
     if sys.argv[1] == 'rs':  # user specifies realsense camera
         capture_rs_image()
-    else:
+    else:  # user specifies default camera
         capture_image()
