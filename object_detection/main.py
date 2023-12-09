@@ -14,11 +14,21 @@ ENVIRONMENT = "2"  # 1 for sim, 2 for real
 
 
 def capture(camera_type):
+    '''
+    Runs python script to capture image from rs or default camera
+
+    Parameters:
+        camera_type (str): 'rs' for realsense camera, anything else for default camera
+    '''
     camera_command = ["python3", "camera.py", camera_type]
     subprocess.run(camera_command)
 
 
 def detect():
+    '''
+    Runs python script to detect and save bounding boxes of cup, green bottle, and blue bottle in captured image
+    Uses Yolov5 model, trained on simulated and real images of the cup, green bottle, and blue bottle
+    '''
     detection_command = ['python3', 'yolov5/detect.py', "--weights",
                          WEIGHTS,
                          "--imgsz", IMG_WIDTH, IMG_HEIGHT, "--conf", CONF,
@@ -27,28 +37,26 @@ def detect():
 
 
 def predict():
-    # Initialize an empty dictionary
+    '''
+    Runs python script to predict the distance between the cup and the green bottle and the blue bottle
+    '''
     bottle_dims = {}
 
-    # Open the file
+    # Open and read file with bounding box dimensions
     with open(PRED_PATH, 'r') as file:
-        # Iterate over each line
         for line in file:
-            # Split the line into parts
-            parts = line.strip().split()  # Assuming space is the delimiter
-
-            # Ensure there are at least four parts
+            parts = line.strip().split()
             if len(parts) >= 5:
-                # First part is the key, next three are the tuple values
                 obj = parts[0]
                 dimensions = tuple(parts[1:5])
-
-                # Add to the dictionary
                 bottle_dims[obj] = dimensions
 
     pixel_to_cm = {45: [1 / 9.3824, 1 / 11.159, 1 / 13.0542], 60: [1 / 10.5602, 1 / 10.019, 1 / 10.9312]}
+
+    # Use width of green bottle to determine distance object distance from base
     row = 45 if float(bottle_dims['green_bottle'][2]) < 120 else 60
 
+    # Calculate relative px distance between cup and bottles and then convert to cm
     g_bottle_relative = float(bottle_dims['green_bottle'][0]) - float(bottle_dims['cup'][0])
     b_bottle_relative = float(bottle_dims['blue_bottle'][0]) - float(bottle_dims['cup'][0])
     pixel_to_cm = pixel_to_cm[row]
@@ -58,11 +66,13 @@ def predict():
                     pc.pixel_to_cm(abs(b_bottle_relative), pixel_to_cm[0], pixel_to_cm[1], pixel_to_cm[2]))
 
     print(f'row {row} \n green: {g_bottle_pos}, blue: {b_bottle_pos}')
-
     return row, g_bottle_pos, b_bottle_pos
 
 
 def move(row, g_bottle_pos, b_bottle_pos):
+    '''
+    Using positions of bottles, selects whether to using right or left motion planning with
+    '''
     right_command = ["python3", MOTION_LEFT]
     left_command = ["python3", MOTION_RIGHT]
 

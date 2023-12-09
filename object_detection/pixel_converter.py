@@ -1,4 +1,6 @@
-
+"""
+This file contains functions to convert pixel distances to centimeters based off environment and measurements
+"""
 def pixel_to_cm(dist_px, px_to_cm_leq_25, px_to_cm_bet_25_30, px_to_cm_gt_30):
     """
     Converts bottle's distance in pixels from cup to centimeters in real setting and return.

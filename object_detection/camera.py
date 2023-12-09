@@ -1,3 +1,8 @@
+"""
+
+"""
+
+
 import os
 import sys
 import time
@@ -5,7 +10,6 @@ import cv2
 from realsense_depth import *
 
 ENV_IMAGE = 'data/environment_photo.jpg'
-
 
 def capture_rs_image():
     """
