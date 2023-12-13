@@ -193,8 +193,6 @@ class UR5eMoveGroupPythonInterface(object):
         # Get EE to lower than the bottle mouth
         self.go_to_joint_state(*joint_states["low"])
 
-        bottle_y, bottle_x = bottle_x, bottle_y
-
         # Get EE ready to grab bottle from diagonal
         wpose = self.move_group.get_current_pose().pose
         x0, y0, z0, qx0, qy0, qz0, qw0 = pose_to_list(wpose)
@@ -269,15 +267,9 @@ def main():
             bottle_x = float(bottle_x)
             bottle_y = float(bottle_y)
         else:
-            sim_or_phys = input(
-                "Are you running a simulation or physical system? \n"
-                "[1] Simulation  [2] Physical : "
-            )
-            bottle_x = float(input("Bottle x coordinate: "))
-            bottle_y = float(input("Bottle y coordinate: "))
-
-        # We only allow bottle coordinates within a range where YOLO can accurately identify them
-        assert abs(bottle_x) < 0.5, 0 < bottle_y < 1
+            sim_or_phys = "1"
+            bottle_x = 0.45
+            bottle_y = -0.35
 
         # Fixed cup location
         cup_x = 0.45
